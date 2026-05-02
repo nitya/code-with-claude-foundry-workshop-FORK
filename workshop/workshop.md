@@ -20,11 +20,10 @@ In this lab you will:
 
 1. Open <https://ai.azure.com> in your browser.
 2. Sign in with the account provided for the workshop.
-3. Select a **project**.
+3. In the top bar, toggle the **New Foundry** switch on.
+4. Your **project** is selected by default - no need to pick one.
 
-> 📸 **Screenshot placeholder:** Foundry landing page with the project selected.
-> Save as `workshop/images/01-foundry-home.png`.
-
+![Foundry landing page with the New Foundry toggle on and the project selected](images/01-foundry-home.png)
 
 
 ## Part 2 - Find a Model and Test It
