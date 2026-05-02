@@ -6,8 +6,9 @@ In this lab you will:
 2. Grab the model's **endpoint** and **API key**.
 3. Build a Python agent with the **Microsoft Agent Framework** step-by-step:
    - A minimal "hello world" agent
-   - Give it **instructions** (a system prompt)
-   - Extend it with an **MCP tool** (the Cupcake Store)
+   - Connect to the **Cupcake Store MCP server** for tools
+   - Load the agent's **instructions** and **welcome banner** as MCP prompts
+   - Polish the chat experience
 
 **Prerequisites**
 - Access to an Azure subscription with Microsoft Foundry
@@ -92,8 +93,8 @@ Install them:
 pip install -r requirements.txt
 ```
 
-Create an empty `agent.py` file in the same folder. You'll build it up in three
-steps. After each step, run:
+Create an empty `agent.py` file in the same folder. You'll build it up in
+four small steps. After each step, run:
 
 ```bash
 python agent.py
@@ -103,10 +104,11 @@ python agent.py
 
 ### Step 1 - Hello World Agent
 
-Start with a minimal agent that just talks to the model.
+Start with a minimal agent that just talks to the model. No tools, no
+persona - just confirm we can reach Foundry.
 
 ```python
-"""Cupcake ordering agent - Microsoft Agent Framework demo."""
+"""Sparkles - The Cupcake ordering agent"""
 
 import asyncio
 import os
@@ -163,67 +165,19 @@ Assistant: Hi there! How can I help you today?
 
 
 
-### Step 2 - Add Instructions
+### Step 2 - Connect to the Cupcake Store MCP Server
 
-Give the agent a persona by loading a system prompt from `instructions.md`.
+Now give the agent **real tools** by connecting to the Cupcake Store MCP
+server. The server exposes tools the agent can call (list flavors, place an
+order, etc.).
 
-The repo already contains `agent-framework/instructions.md`:
+Two changes:
 
-```markdown
-You are a friendly cupcake-shop concierge at a workshop demo booth. You help a
-single customer order exactly ONE cupcake for in-person pickup, using the
-tools provided by the "Cupcake Store" MCP server.
-```
-
-Update `agent.py` - read the instructions and pass them to the `Agent`:
+1. Import `MCPStreamableHTTPTool`, create it, and `connect()`.
+2. Pass it to the `Agent` via `tools=`.
 
 ```python
-async def main() -> None:
-    # Read the agent's instructions (system prompt)
-    instructions = open("instructions.md").read()   # 👈 new
-
-    chat_client = AnthropicFoundryClient(
-        model=os.environ["FOUNDRY_MODEL_DEPLOYMENT"],
-        api_key=os.environ["FOUNDRY_API_KEY"],
-        base_url=os.environ["FOUNDRY_ENDPOINT"],
-    )
-
-    agent = Agent(
-        client=chat_client,
-        name="cupcake-agent",
-        instructions=instructions,   # 👈 new
-    )
-
-    session = agent.create_session()
-    print("Type 'exit' to quit.\n")
-
-    while True:
-        user_input = input("You: ")
-        if user_input.lower() in ("exit", "quit"):
-            break
-
-        response = await agent.run(user_input, session=session)
-        print(f"Assistant: {response.text}\n")
-```
-
-**Try it:** Ask "What do you sell?" - the agent should now behave like a
-cupcake-shop concierge. It doesn't have any real data yet, so it will improvise
-politely.
-
-> 📸 **Screenshot placeholder:** Terminal showing the agent responding in-character.
-> Save as `workshop/images/05-step2-instructions.png`.
-
-
-
-### Step 3 - Add the Cupcake Store MCP Server
-
-Now give the agent **real tools** by connecting to the Cupcake Store MCP server.
-
-Add the `MCPStreamableHTTPTool` import, connect to the server, pass it to the
-agent, and close it when the chat ends:
-
-```python
-"""Cupcake ordering agent - Microsoft Agent Framework demo."""
+"""Sparkles - The Cupcake ordering agent"""
 
 import asyncio
 import os
@@ -238,45 +192,40 @@ load_dotenv()
 
 
 async def main() -> None:
-    # 2. Read the agent's instructions (system prompt)
-    instructions = open("instructions.md").read()
-
-    # 3. Configure the chat model (Claude on Microsoft Foundry)
+    # 2. Configure the chat model (Claude on Microsoft Foundry)
     chat_client = AnthropicFoundryClient(
         model=os.environ["FOUNDRY_MODEL_DEPLOYMENT"],
         api_key=os.environ["FOUNDRY_API_KEY"],
         base_url=os.environ["FOUNDRY_ENDPOINT"],
     )
 
-    # 4. Connect to the Cupcake Store MCP server
+    # 3. Connect to the Cupcake Store MCP server                 👈 new
     mcp_tool = MCPStreamableHTTPTool(
         name="cupcake-store",
         url="https://ca-cupcake-mcp.jollyplant-ed217b0d.eastus.azurecontainerapps.io/mcp/",
     )
     await mcp_tool.connect()
 
-    # 5. Create the agent
+    # 4. Create the agent
     agent = Agent(
         client=chat_client,
         name="cupcake-agent",
-        instructions=instructions,
-        tools=mcp_tool,   # 👈 new
+        tools=mcp_tool,                                          # 👈 new
     )
 
-    # 6. Start a chat session and talk to the agent
+    # 5. Start a chat session and talk to the agent
     session = agent.create_session()
     print("Type 'exit' to quit.\n")
 
-    try:
-        while True:
-            user_input = input("You: ")
-            if user_input.lower() in ("exit", "quit"):
-                break
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() in ("exit", "quit"):
+            break
 
-            response = await agent.run(user_input, session=session)
-            print(f"Assistant: {response.text}\n")
-    finally:
-        await mcp_tool.close()
+        response = await agent.run(user_input, session=session)
+        print(f"Assistant: {response.text}\n")
+
+    await mcp_tool.close()
 
 
 if __name__ == "__main__":
@@ -292,10 +241,121 @@ You: I'll take one chocolate cupcake.
 Assistant: Great choice! I've placed the order ...
 ```
 
-The agent is now calling MCP tools on the Cupcake Store server.
+The agent is now calling MCP tools on the Cupcake Store server. But it's
+still acting like a generic assistant - it has no persona yet.
 
 > 📸 **Screenshot placeholder:** Terminal showing the agent listing flavors and placing an order.
-> Save as `workshop/images/06-step3-mcp.png`.
+> Save as `workshop/images/05-step2-mcp.png`.
+
+
+
+### Step 3 - Load Instructions and a Welcome Banner from MCP
+
+MCP servers can also expose **prompts** - pre-written text the server owner
+curates. The Cupcake Store exposes two:
+
+- `agent_instructions` - the persona / system prompt
+- `welcome_banner` - a friendly greeting to print at startup
+
+Fetch both from the server, pass `agent_instructions` to the `Agent`, and
+print the banner before the chat starts.
+
+```python
+async def main() -> None:
+    # 2. Configure the chat model (Claude on Microsoft Foundry)
+    chat_client = AnthropicFoundryClient(
+        model=os.environ["FOUNDRY_MODEL_DEPLOYMENT"],
+        api_key=os.environ["FOUNDRY_API_KEY"],
+        base_url=os.environ["FOUNDRY_ENDPOINT"],
+    )
+
+    # 3. Connect to the Cupcake Store MCP server
+    mcp_tool = MCPStreamableHTTPTool(
+        name="cupcake-store",
+        url="https://ca-cupcake-mcp.jollyplant-ed217b0d.eastus.azurecontainerapps.io/mcp/",
+    )
+    await mcp_tool.connect()
+
+    # 4. Get the instructions and welcome banner from the MCP server   👈 new
+    instructions = await mcp_tool.get_prompt("agent_instructions")
+    banner = await mcp_tool.get_prompt("welcome_banner")
+
+    # 5. Create the agent
+    agent = Agent(
+        client=chat_client,
+        name="cupcake-agent",
+        instructions=instructions,                                     # 👈 new
+        tools=mcp_tool,
+    )
+
+    # 6. Start a chat session and talk to the agent
+    session = agent.create_session()
+    print(banner)                                                      # 👈 new
+    print("Type 'exit' to quit.\n")
+
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() in ("exit", "quit"):
+            break
+
+        response = await agent.run(user_input, session=session)
+        print(f"Assistant: {response.text}\n")
+
+    await mcp_tool.close()
+```
+
+**Try it:** You should now see the welcome banner first, and the agent
+behaves as a friendly cupcake-shop concierge.
+
+```
+🧁 Welcome to the Cupcake Store! ...
+
+You: Hi
+Assistant: Hi there! Ready to pick out a cupcake? ...
+```
+
+> 📸 **Screenshot placeholder:** Terminal showing the banner and the agent greeting in-character.
+> Save as `workshop/images/06-step3-prompts.png`.
+
+
+
+### Step 4 - Polish the Chat Experience
+
+Two small touches to make the demo feel finished:
+
+1. **Auto-kick off** the conversation by sending a `"hello"` so the agent
+   greets the user first.
+2. **Colorize** the `You:` and `Assistant:` labels with bold magenta so the
+   transcript is easier to read.
+
+Replace the chat loop section (step 6) with this:
+
+```python
+    # 6. Start a chat session and talk to the agent
+    session = agent.create_session()
+    print(banner)
+    print("Type 'exit' to quit.\n")
+
+    # Kick things off automatically                                    👈 new
+    response = await agent.run("hello", session=session)
+    print(f"\033[1;35mAssistant:\033[0m\n{response.text}\n")
+
+    while True:
+        user_input = input("\033[1;35mYou:\033[0m\n")                  # 👈 updated
+        if user_input.lower() in ("exit", "quit"):
+            break
+
+        response = await agent.run(user_input, session=session)
+        print(f"\n\033[1;35mAssistant:\033[0m\n{response.text}\n")     # 👈 updated
+
+    await mcp_tool.close()
+```
+
+That's it - your `agent.py` now matches the final sample in
+[`sample/agent.py`](../sample/agent.py).
+
+> 📸 **Screenshot placeholder:** Terminal showing the colored prompts and auto-greeting.
+> Save as `workshop/images/07-step4-polish.png`.
 
 
 
@@ -304,10 +364,11 @@ The agent is now calling MCP tools on the Cupcake Store server.
 You built an AI agent that:
 
 - ✅ Uses a model deployment from Microsoft Foundry
-- ✅ Follows a custom persona via a system prompt
 - ✅ Calls live tools through an MCP server
+- ✅ Loads its persona and welcome banner from MCP **prompts**
+- ✅ Greets the user automatically with a polished, colored chat UI
 
-The final, complete source is in [`agent-framework/agent.py`](../agent-framework/agent.py).
+The final, complete source is in [`sample/agent.py`](../sample/agent.py).
 
 
 
