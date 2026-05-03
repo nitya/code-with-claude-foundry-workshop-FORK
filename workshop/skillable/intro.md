@@ -31,6 +31,8 @@ together along the way.
 > control panel for the brains of your agent.    
 > [Learn more about Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/what-is-foundry)
 
+---
+
 ## Login into the Machine
 Everything you'll do today happens on the Windows 11 lab VM on the left
 of your screen - browser, code editor, terminal, the lot. Sign in once
@@ -38,4 +40,11 @@ and you're set for the rest of the workshop. Click inside the VM,
 unlock it, and use the credentials below .
 
 **Username:** +++@lab.VirtualMachine(Windows11).Username+++   
-**Password:** +++@lab.VirtualMachine(Windows11).Password+++  
+**Password:** +++@lab.VirtualMachine(Windows11).Password+++
+
+---
+
+✅ **In this step you have:** met Sparkles, learned what you'll build,
+and signed in to the Windows 11 lab VM where the workshop runs.
+
+➡️ Click **Next** to log in to Microsoft Foundry.  
