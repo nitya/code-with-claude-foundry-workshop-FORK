@@ -17,11 +17,23 @@ instance to use). All three live one click away.
 > screenshots, or commits. The '.env' file you'll edit next is already
 > listed in '.gitignore' so it stays on your machine.
 
-3. Open the existing ".env" file in the "sparkles-agent/" folder and replace
-   the placeholder values with the ones you just copied:
+3. On the lab VM, open **Visual Studio Code** from the Start menu or the
+   taskbar. It opens 'c:\agents' by default - that's where the workshop
+   code lives.
+
+4. In the VS Code Explorer, open the existing '.env' file and replace the
+   placeholder values with the ones you just copied:
 
    ```env
    FOUNDRY_ENDPOINT="https://<your-resource>.services.ai.azure.com/anthropic"
    FOUNDRY_API_KEY="<your-api-key>"
    FOUNDRY_MODEL_DEPLOYMENT="<your-deployment-name>"
    ```
+
+---
+
+✅ **In this step you have:** copied the **Target URI**, **Key**, and
+**deployment name** from Foundry, opened 'c:\agents' in Visual Studio
+Code, and pasted the values into the '.env' file.
+
+➡️ Click **Next** to start building the agent in code.

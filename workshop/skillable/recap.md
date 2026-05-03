@@ -31,7 +31,7 @@ The full source is in ['sample/agent.py'](../sample/agent.py).
 
 | Problem | Fix |
 | -- | -- |
-| 'Missing required environment variable' | Check '.env' is in the 'sparkles-agent/' folder and the variable names match |
+| 'Missing required environment variable' | Check '.env' is in the 'c:\agents' folder and the variable names match |
 | '401 Unauthorized' | Wrong API key or endpoint - re-copy from Foundry |
 | 'DeploymentNotFound' | 'FOUNDRY_MODEL_DEPLOYMENT' must match the **deployment** name, not the model name |
 | 'ImportError: cannot import name 'Agent'' | Run 'pip install -r requirements.txt' again |

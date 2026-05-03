@@ -33,3 +33,11 @@ in a moment.
      from your own app, including the endpoint and headers.
 
 ![Deployed models](../images/02b-playground-hello.png)
+
+---
+
+✅ **In this step you have:** picked the **claude-sonnet-4-6** deployment,
+opened the Playground, and chatted with the model to confirm it works.
+
+➡️ Click **Next** to grab the endpoint, key, and deployment name you'll
+need from your code.

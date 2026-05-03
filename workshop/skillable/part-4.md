@@ -7,13 +7,11 @@ into a single 'Agent' object you can talk to.
 
 ### Setup
 
-Open a terminal in the 'sparkles-agent/' folder of this repo:
+In Visual Studio Code, open a new terminal (**Terminal > New Terminal**).
+It opens in 'c:\agents' - the folder where the workshop code lives.
 
-```bash
-cd sparkles-agent
-```
-
-The folder already contains a 'requirements.txt' with the dependencies you need:
+The Python dependencies are already installed on the lab VM. For
+reference, here's what's in 'requirements.txt':
 
 ```
 agent-framework
@@ -25,17 +23,6 @@ python-dotenv
 - 'agent-framework-foundry' - the Foundry-specific chat clients (this is
   what knows how to talk to your Anthropic deployment on Foundry).
 - 'python-dotenv' - loads your '.env' file into environment variables.
-
-Install them:
-
-```bash
-pip install -r requirements.txt
-```
-
-> 💡 **Tip:** if you're working locally, create a virtual environment
-> first ('python -m venv .venv && source .venv/bin/activate') so these
-> packages don't pollute your global Python. In Codespaces this is
-> already taken care of.
 
 Create an empty 'agent.py' file in the same folder. You'll build it up in
 three small steps - run it after each step to see the agent grow.
@@ -328,3 +315,11 @@ Hi there! Ready to pick out a cupcake? ...
 
 
 ![](../images/07-dashboard.png)
+
+---
+
+✅ **In this step you have:** built a Hello World agent, connected it to
+the Cupcake Store MCP server for tools, loaded its persona and welcome
+banner from MCP prompts, and ordered a real cupcake.
+
+➡️ Click **Next** for the recap and ideas on where to go from here.
