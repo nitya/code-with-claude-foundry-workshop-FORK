@@ -428,8 +428,7 @@ so the user sees the persona greet them right away.
 python agent.py
 ```
 
-**Try it:** Now it's time to order your cupcake! 🧁 Answer the agent's
-questions, pick your favorite flavor, place the order, and pick it up.
+**Try it:** Now it's time to order your cupcake! 
 
 ```txt
 Assistant:
@@ -437,6 +436,16 @@ Hi there! Ready to pick out a cupcake? ...
 ```
 
 ![](images/06-step3-prompts.png)
+
+
+- Answer the questions of the agent
+- Select your favorite cupcake
+- Place your order
+- Look at the screen in the room
+- When your order is ready for pickup, go to the front of the room to pick it up
+
+
+![](images/07-dashboard.png)
 
 ## Recap
 
