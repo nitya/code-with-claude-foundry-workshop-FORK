@@ -24,23 +24,20 @@ By the end, you'll have ordered a cupcake from an agent you built from
 scratch - and learned how Foundry, the Agent Framework, and MCP fit
 together along the way. 
 
-**Prerequisites**
-- Access to an Azure subscription with Microsoft Foundry
-- Python 3.10+ installed
-- This repository cloned locally (or opened in a Codespace)
-
 > **What is Microsoft Foundry?** Foundry is Microsoft's hosted platform
 > for shipping AI applications. It's where you deploy models (OpenAI,
 > Anthropic, Mistral, your own fine-tunes), give them an endpoint and a
 > key, and then wire them into your code. Think of it as the cloud
 > control panel for the brains of your agent.
-
+> [Learn more about Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/what-is-foundry?
 
 
 ## Part 1 - Log in to Microsoft Foundry
 
 1. Open <https://ai.azure.com> in your browser.
-2. Sign in with the account provided for the workshop.
+2. Sign in with the details below:    
+    **Username**: +++@lab.CloudPortalCredential(User1).Username+++    
+    **Password (TAP)**:  +++@lab.CloudPortalCredential(User1).AccessToken+++     
 3. In the top bar, toggle the **New Foundry** switch on.
 4. Your **project** is selected by default - no need to pick one.
 
@@ -50,7 +47,7 @@ together along the way.
 ## Part 2 - Find a Model and Test It
 
 A quick word on vocabulary before you click around: a **model** (like
-`claude-sonnet-4`) is the underlying AI. A **deployment** is your
+claude-sonnet-4) is the underlying AI. A **deployment** is your
 personal, named instance of that model running in your project, with its
 own endpoint, key, and rate limits. Your code talks to the *deployment
 name*, not the model name - that's the bit you'll wire into your `.env`
@@ -59,7 +56,7 @@ in a moment.
 1. In the top navigation, make sure **Build** is selected.
 2. In the left-hand navigation, click **Models**.
 3. On the **Deployments** tab you'll see all models deployed to this project.
-   For this workshop, pick **`claude-sonnet-4-6`**.
+   For this workshop, pick **claude-sonnet-4-6**.
    The **Name** column is the **deployment name** - you'll need it later.
 4. Click the deployment - you'll land directly in the **Playground** and can
    chat with it right there.
@@ -94,9 +91,9 @@ instance to use). All three live one click away.
 
 1. In the playground - click the **Details** tab at the top.
 2. On the **Details** tab, copy:
-   - **Target URI** - the endpoint, e.g. `https://<your-resource>.services.ai.azure.com/anthropic`
+   - **Target URI** - the endpoint, e.g. "https://<your-resource>.services.ai.azure.com/anthropic"
    - **Key** - click the eye icon to reveal it, then the copy icon next to it
-   - **Name** of the deployment (e.g. `claude-sonnet-4-6`) - shown under **Deployment info**
+   - **Name** of the deployment (e.g. claude-sonnet-4-6) - shown under **Deployment info**
 
 ![Endpoint keys](images/03-endpoint-keys.png)
 
@@ -104,7 +101,7 @@ instance to use). All three live one click away.
 > screenshots, or commits. The `.env` file you'll edit next is already
 > listed in `.gitignore` so it stays on your machine.
 
-3. Open the existing `.env` file in the `sparkles-agent/` folder and replace
+3. Open the existing ".env" file in the "sparkles-agent/" folder and replace
    the placeholder values with the ones you just copied:
 
    ```env
@@ -112,8 +109,6 @@ instance to use). All three live one click away.
    FOUNDRY_API_KEY="<your-api-key>"
    FOUNDRY_MODEL_DEPLOYMENT="<your-deployment-name>"
    ```
-
-
 
 ## Part 4 - Build the Agent
 
