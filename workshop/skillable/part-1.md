@@ -1,0 +1,10 @@
+## Part 1 - Log in to Microsoft Foundry
+
+1. Open <https://ai.azure.com> in your browser.
+2. Sign in with the details below:    
+    **Username**: +++@lab.CloudPortalCredential(User1).Username+++    
+    **Password (TAP)**:  +++@lab.CloudPortalCredential(User1).AccessToken+++     
+3. In the top bar, toggle the **New Foundry** switch on.
+4. Your **project** is selected by default - no need to pick one.
+
+![Foundry landing page with the New Foundry toggle on and the project selected](../images/01-foundry-home.png)
