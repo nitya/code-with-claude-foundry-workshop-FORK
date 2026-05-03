@@ -13,7 +13,7 @@ that you'll see in every agent you build:
 
 Paste this into 'agent.py':
 
-```python
+```python-notype
 """Sparkles - The Cupcake ordering agent"""
 
 import asyncio

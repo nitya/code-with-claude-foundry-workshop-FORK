@@ -16,7 +16,7 @@ code keeps working without a redeploy. The Cupcake Store exposes two:
 Fetch both from the server, pass 'agent_instructions' to the 'Agent', and
 print the banner before the chat starts.
 
-```python
+```python-notype
 """Sparkles - The Cupcake ordering agent"""
 
 import asyncio

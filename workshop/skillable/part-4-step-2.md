@@ -20,7 +20,7 @@ Two changes to your 'agent.py':
 The agent will discover the available tools automatically and decide when
 to call them based on what you ask.
 
-```python
+```python-notype
 """Sparkles - The Cupcake ordering agent"""
 
 import asyncio
