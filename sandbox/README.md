@@ -41,20 +41,22 @@ This final step should open a new browser tab with a VS Code editor. Wait till t
 1. Create a `.env` file using the provided sample using this command:
 
     ```bash
-    cp sandbox/sample.env ./.env
+    cp sandbox/env.sample ./.env
     ```
 
-1. Open `.env` in your editor - you should see 3 variables defined:
+1. Open `.env` in your editor - you should see these variables defined:
 
     ```bash
-    FOUNDRY_ENDPOINT="https://<your-resource>.services.ai.azure.com/anthropic"
+    FOUNDRY_PROJECT_ENDPOINT="<your-project-endpoint>"
     FOUNDRY_API_KEY="<your-api-key>"
+    FOUNDRY_ENDPOINT="https://<your-resource>.services.ai.azure.com/anthropic"
     FOUNDRY_MODEL_DEPLOYMENT="claude-sonnet-4-6"
     ```
 1. Update the values by referencing the Microsoft Foundry Portal page in Step 1.
 
+    - Set `FOUNDRY_PROJECT_ENDPOINT` to the **Foundry Endpoint** value on that page
     - Set `FOUNDRY_API_KEY` to the **API Key** value on that page
-    - Replace `<your-resource>` in FOUNDRY_ENDPOINT` with the resource name in Foundry Endpoint
+    - Set `FOUNDRY_ENDPOINT` by replacing the "your-resource" value from project endpoint
     - Leave the `FOUNDRY_MODEL_DEPLOYMENT` value unchanged
 
 
@@ -80,6 +82,12 @@ The GitHub Codespaces should have pre-installed the dependencies in `sandbox/req
 
     ```bash
     pip install -r sandbox/requirements.txt
+    ```
+
+1. Authenticate with Azure - using the credential provided in Skillable lab
+
+    ```bash
+    az login
     ```
 
 **Congratulations** - You have a Foundry project deployed in Microsoft Foundry, and a GitHub Codespaces environment configured with all required dependencies and credentials.

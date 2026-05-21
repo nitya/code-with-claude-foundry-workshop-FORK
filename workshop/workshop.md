@@ -30,8 +30,8 @@ together along the way.
 - This repository cloned locally (or opened in a Codespace)
 
 > **What is Microsoft Foundry?** Foundry is Microsoft's hosted platform
-> for shipping AI applications. It's where you deploy models (OpenAI,
-> Anthropic, Mistral, your own fine-tunes), give them an endpoint and a
+> for shipping AI applications. It's where you deploy models (Anthropic, 
+> Mistral, your own fine-tunes), give them an endpoint and a
 > key, and then wire them into your code. Think of it as the cloud
 > control panel for the brains of your agent.
 

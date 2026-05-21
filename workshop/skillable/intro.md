@@ -25,7 +25,7 @@ scratch - and learned how Foundry, the Agent Framework, and MCP fit
 together along the way. 
 
 > **What is Microsoft Foundry?** Foundry is Microsoft's hosted platform
-> for shipping AI applications. It's where you deploy models (OpenAI,
+> for shipping AI applications. It's where you deploy models (like
 > Anthropic, Mistral, your own fine-tunes), give them an endpoint and a
 > key, and then wire them into your code. Think of it as the cloud
 > control panel for the brains of your agent.    
