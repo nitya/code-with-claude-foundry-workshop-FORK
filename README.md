@@ -10,7 +10,7 @@ An agent for **Sparkles**, a friendly cupcake shop, that:
 - Loads its persona and welcome banner from MCP **prompts**
 - Calls live tools from the **Cupcake Store MCP server**
 
-> **Microsoft Foundry** is Microsoft's hosted platform for deploying AI models (OpenAI, Anthropic, Mistral, and more) and exposing them via an endpoint and key.
+> **Microsoft Foundry** is Microsoft's hosted platform for deploying AI models (Anthropic, Mistral, and more) and exposing them via an endpoint and key.
 >
 > **MCP** (Model Context Protocol) is an open standard that lets agents discover and call tools, prompts, and resources from a remote server over HTTP.
 
