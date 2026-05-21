@@ -13,7 +13,7 @@
 
 At this time you should have:
 
-- [X] An open Skillable VM with an active Azure subscriptio
+- [X] An open Skillable VM with an active Azure subscription
 - [X] An open Edge browser pointing to [https://ai.azure.com](https://ai.azure.com) and logged in
 - An existing Foundry project in that account - with a Home page like this:
 
@@ -32,7 +32,7 @@ For this workshop, we will be using Jupyter notebooks as a sandbox to explore Cl
 - [X] Click the blue **Code** button - and select the **Codespaces** tab
 - [X] Click **Create a new Codespace..** - and wait till this loads.
 
-This final step should open a new browser tab with a VS Code editor. Wait till this is loaded completely and you see an active terminal. _This may take a few minutes_.
+This final step should open a new browser tab with a VS Code editor. Wait till this is loaded completely and you see an active terminal. _This may take a few minutes to complete!!_.
 
 ===
 
